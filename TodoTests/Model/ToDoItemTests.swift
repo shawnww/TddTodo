@@ -8,7 +8,7 @@
 
 import XCTest
 
-
+@testable import Todo
 class ToDoItemTests: XCTestCase {
     
     override func setUp() {

@@ -7,7 +7,7 @@
 //
 
 import XCTest
-
+@testable import Todo
 class ItemManagerTests: XCTestCase {
     var sut: ItemManager!
     

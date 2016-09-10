@@ -8,7 +8,7 @@
 
 import XCTest
 import CoreLocation
-
+@testable import Todo
 class LocationTests: XCTestCase {
     
     override func setUp() {
