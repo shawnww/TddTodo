@@ -22,54 +22,79 @@ class ItemManagerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testToDoCount_Initially_ShouldBeZero() {
+    
+    
+    
+    
+    
+    func  testTodoCount_ShouldBeZeroInitially()  {
+        
         
         XCTAssertEqual(sut.todoCount, 0)
     }
     
-    func testDoneCount_Initially_ShouldBeZero() {
-        
-        XCTAssertEqual(sut.doneCount, 0)
-    }
-    
-    func testTodoCount_AfterAddingOneItem_IsOne()  {
-        sut.addItem(ToDoItem(title:"a item"))
-        
-        XCTAssertEqual(sut.todoCount, 1)
-    }
-    
-    func testItemAtIndex_ShouldReturnPreviouslyAddedItem()  {
+    func testTodoCount_ShouldAddOne_AfterAddAnItem()  {
         let item = ToDoItem(title: "item")
         sut.addItem(item)
         
-        let returnedItem = sut.itemAtIndex(0)
-        XCTAssertEqual(returnedItem.title, "item")
+        XCTAssertEqual(sut.todoCount, 1 )
     }
     
-    func testCheckingItem_ChangesCountOfToDoAndOfDoneItems()  {
-        sut.addItem(ToDoItem(title: ""))
-        sut.checkItemAtIndex(0)
+    func testItemAtIndex_ShouldReturnPreviouselyAddedItem(){
+        let item = ToDoItem(title: "item")
+        sut.addItem(item)
         
+        XCTAssertEqual(sut.itemAtIndex(0).title, item.title)
+    }
+    
+    func testDoneCount_ShouldBeZeroInitially()  {
+        
+
+        XCTAssertEqual(sut.doneCount, 0)
+    }
+    
+    
+    func testCheckItemAtIndex_ShouldAddOneToDoneCount_minusOneToTodoCount()  {
+        let item = ToDoItem(title: "item")
+        sut.addItem(item)
+        
+        sut.checkItemAtIndex(0)
         XCTAssertEqual(sut.todoCount, 0)
         XCTAssertEqual(sut.doneCount, 1)
     }
     
-    func testCheckingItem_RemovesItFromTheToDoItemList()  {
+    
+    
+    func testCheckItemAtIndex_shouldRemoveItemFromTodoItem(){
+        let firstItem = ToDoItem(title: "first")
+        let secondItem = ToDoItem(title: "second")
+        sut.addItem(firstItem)
+        sut.addItem(secondItem)
+        
+        sut.checkItemAtIndex(0)
+        
+        XCTAssertEqual(sut.itemAtIndex(0).title, secondItem.title)
+        
+    }
+    
+    func testDoneItemAtIndex_ShouldReturnPreviouslyCheckedItem()  {
         let firstItem = ToDoItem(title: "first")
         let secondItem = ToDoItem(title: "second")
         sut.addItem(firstItem)
         sut.addItem(secondItem)
         sut.checkItemAtIndex(0)
         
-        XCTAssertEqual(sut.itemAtIndex(0).title, "second")
+        let returnedItem = sut.doneItemAtIndex(0)
+        XCTAssertEqual(returnedItem.title, firstItem.title)
     }
     
     
-    func testDoneItemAtIndex_ShouldReturnPreviouslyCheckedItem() {
-//        let item = ToDoItem(title: "Item")
-//        sut.addItem(item)
-//        sut.checkItemAtIndex(0)
-        
-
-    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
