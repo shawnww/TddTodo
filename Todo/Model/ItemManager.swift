@@ -19,7 +19,9 @@ class ItemManager {
     private var doneItems = [ToDoItem]()
     
     func addItem(item: ToDoItem) {
-        todoItems.append(item)
+        if !todoItems.contains(item) {
+            todoItems.append(item)
+        }
     }
     
     func itemAtIndex(index: Int) -> ToDoItem {

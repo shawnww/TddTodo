@@ -109,6 +109,12 @@ class ItemManagerTests: XCTestCase {
 
     }
     
+    func testAddItem_AddTheSameItem_ShouldNotIncreaseItemCount() {
+        sut.addItem(ToDoItem(title:"item"))
+        sut.addItem(ToDoItem(title:"item"))
+        
+        XCTAssertEqual(sut.todoCount, 1)
+    }
     
     
     
