@@ -6,7 +6,7 @@
 //  Copyright © 2016 Spark. All rights reserved.
 //
 
-struct ToDoItem {
+struct ToDoItem: Equatable {
     let title: String
     let itemDescription: String?
     let timeStamp: Double?
@@ -19,3 +19,15 @@ struct ToDoItem {
         self.location = location
     }
 }
+
+
+
+func ==(lhs: ToDoItem, rhs: ToDoItem) -> Bool {
+    
+    return lhs.title == rhs.title &&
+        lhs.location == rhs.location &&
+        lhs.timeStamp == rhs.timeStamp &&
+        lhs.itemDescription == rhs.itemDescription
+}
+
+

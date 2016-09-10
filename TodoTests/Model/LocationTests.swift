@@ -34,4 +34,56 @@ class LocationTests: XCTestCase {
         XCTAssertEqual(testCoordinate.latitude, location.coordinate?.latitude)
     }
     
+    func testEqual_ShouldBeEqual()  {
+        let l1 = Location(name:  "location")
+        let l2 = Location(name:  "location")
+        
+        XCTAssertEqual(l1, l2)
+    }
+    
+    
+    
+    func performNotEqualTestWithLocationProperties(firstName: String,
+                                                   secondName: String,
+                                                   firstLongLat: (Double, Double)?,
+                                                   secondLongLat: (Double, Double)?,
+                                                   line:UInt = #line) {
+        let firstCoord: CLLocationCoordinate2D?
+        if let firstLongLat = firstLongLat {
+            firstCoord = CLLocationCoordinate2D(latitude: firstLongLat.0, longitude: firstLongLat.1)
+        }else{
+            firstCoord = nil
+        }
+        let firstLocation = Location(name: firstName, coordinate: firstCoord)
+        
+        let secondCoord: CLLocationCoordinate2D?
+        if let secondLongLat = secondLongLat {
+            secondCoord = CLLocationCoordinate2D(latitude: secondLongLat.0, longitude: secondLongLat.1)
+        }else{
+            secondCoord = nil
+        }
+        let secondLocation = Location(name: secondName, coordinate: secondCoord)
+        
+        XCTAssertNotEqual(firstLocation, secondLocation,line: line)
+    
+    }
+    
+    func testEqual_WhenLatitudeDiffers_ShouldNotEqual() {
+        performNotEqualTestWithLocationProperties("Home", secondName: "Home", firstLongLat: (0.0,1.0), secondLongLat: (0.0,0.0))
+    }
+    
+    
+    func testEqual_WhenLongtitudeDiffers_ShouldNotEqual() {
+        performNotEqualTestWithLocationProperties("Home", secondName: "Home", firstLongLat: (1.0,0.0), secondLongLat: (0.0,0.0))
+        }
+    
+    func testEqual_WhenOneHasLongLatOtherOneHaveNot_ShouldNotEqual(){
+        performNotEqualTestWithLocationProperties("H", secondName: "H", firstLongLat: (1.0,1.0), secondLongLat: nil)
+    }
+    
+    func testEqual_WhenTwoLocationHasDiffrentName_ShouldNotEqual()  {
+        performNotEqualTestWithLocationProperties("AB", secondName: "CD", firstLongLat: (0.0,1.1), secondLongLat: (1.2,1.3))
+    }
+    
+    
 }
