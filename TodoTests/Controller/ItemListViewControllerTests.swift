@@ -10,9 +10,14 @@ import XCTest
 
 @testable import Todo
 class ItemListViewControllerTests: XCTestCase {
+    var sut: ItemListViewController!
     
     override func setUp() {
         super.setUp()
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        sut = storyboard.instantiateViewControllerWithIdentifier("ItemListViewController") as! ItemListViewController
+        _ = sut.view
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
@@ -23,11 +28,15 @@ class ItemListViewControllerTests: XCTestCase {
     
     
     func test_TableViewIsNotNilAfterViewDidLoad()  {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let sut = storyboard.instantiateViewControllerWithIdentifier("ItemListViewController") as! ItemListViewController
-        _ = sut.view
+       
         
         XCTAssertNotNil(sut.tableView)
+    }
+    
+    func testViewDidLoad_ShouldSetTableViewDataSource(){
+        
+        XCTAssertNotNil(sut.tableView.dataSource)
+        XCTAssertTrue(sut.tableView.dataSource is ItemListDataProvider)
     }
     
 }

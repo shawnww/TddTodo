@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00C6C8511D86219600003F3B /* ItemListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 291F8B461D84BF9100EC71C9 /* ItemListViewControllerTests.swift */; };
+		00C6C8531D86245900003F3B /* ItemListDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C6C8521D86245900003F3B /* ItemListDataProvider.swift */; };
 		00D479991D80C8EF00E660B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D479981D80C8EF00E660B4 /* AppDelegate.swift */; };
 		00D4799B1D80C8EF00E660B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4799A1D80C8EF00E660B4 /* ViewController.swift */; };
 		00D4799E1D80C8EF00E660B4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00D4799C1D80C8EF00E660B4 /* Main.storyboard */; };
@@ -31,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00C6C8521D86245900003F3B /* ItemListDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemListDataProvider.swift; path = Controller/ItemListDataProvider.swift; sourceTree = "<group>"; };
 		00D479951D80C8EF00E660B4 /* Todo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00D479981D80C8EF00E660B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00D4799A1D80C8EF00E660B4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				291F8B551D84C23A00EC71C9 /* ItemListViewController.swift */,
+				00C6C8521D86245900003F3B /* ItemListDataProvider.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -251,6 +255,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00D4799B1D80C8EF00E660B4 /* ViewController.swift in Sources */,
+				00C6C8531D86245900003F3B /* ItemListDataProvider.swift in Sources */,
 				00D479D01D80E06400E660B4 /* ItemManager.swift in Sources */,
 				00D479991D80C8EF00E660B4 /* AppDelegate.swift in Sources */,
 				00D479C91D80DB2C00E660B4 /* Location.swift in Sources */,
@@ -263,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00C6C8511D86219600003F3B /* ItemListViewControllerTests.swift in Sources */,
 				00D479CE1D80DFEC00E660B4 /* ItemManagerTests.swift in Sources */,
 				00D479CC1D80DD0C00E660B4 /* LocationTests.swift in Sources */,
 			);
