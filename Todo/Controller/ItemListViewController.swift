@@ -16,7 +16,8 @@ class ItemListViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        tableView.dataSource = dataProvider 
+        tableView.dataSource = dataProvider
+        tableView.delegate = dataProvider
     }
 
     override func didReceiveMemoryWarning() {
