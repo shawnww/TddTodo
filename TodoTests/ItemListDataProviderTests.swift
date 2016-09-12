@@ -11,14 +11,20 @@ import XCTest
 @testable import Todo
 
 class ItemListDataProviderTests: XCTestCase {
+    
+    
     var sut: ItemListDataProvider!
+    var controller: ItemListViewController!
     var tableView: UITableView!
     
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         sut = ItemListDataProvider()
-        tableView = UITableView()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        controller = storyboard.instantiateViewControllerWithIdentifier("ItemListViewController") as! ItemListViewController
+        _ = controller.view
+        tableView = controller.tableView
         tableView.dataSource = sut
         sut.itemManager = ItemManager()
     }
@@ -54,5 +60,63 @@ class ItemListDataProviderTests: XCTestCase {
         tableView.reloadData()
         XCTAssertEqual(tableView.numberOfRowsInSection(0), 2)
         XCTAssertEqual(tableView.numberOfRowsInSection(1), 1)
+    }
+    
+    func testCellForRow_ShouldReturnItemCell()  {
+        sut.itemManager?.addItem(ToDoItem(title: "a Item"))
+        tableView.reloadData()
+        
+        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        XCTAssertTrue(cell is ItemCell)
+    }
+    
+    func testCellForRow_DequeuesCell() {
+        let mockTableView = MockTableView()
+        
+        mockTableView.dataSource = sut
+        mockTableView.registerClass(ItemCell.self, forCellReuseIdentifier: "ItemCell")
+        
+        sut.itemManager?.addItem(ToDoItem(title: "First"))
+        mockTableView.reloadData()
+        
+        _ = mockTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))
+        XCTAssertTrue(mockTableView.cellGotDequeued)
+    }
+    
+    func testConfigCell_GetsCalledInCellForRow() {
+        let mockTableView = MockTableView()
+        
+        mockTableView.dataSource = sut
+        mockTableView.registerClass(MockItemCell.self, forCellReuseIdentifier: "ItemCell")
+        
+        let toDoItem = ToDoItem(title: "First",
+                                itemDescription: "First desc")
+        sut.itemManager?.addItem(toDoItem)
+        mockTableView.reloadData()
+        
+        let cell = mockTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! MockItemCell
+        
+        XCTAssertTrue(cell.configCellGotCalled)
+    }
+}
+
+
+extension ItemListDataProviderTests {
+    class MockTableView : UITableView {
+        var cellGotDequeued = false
+        
+        override func dequeueReusableCellWithIdentifier(identifier: String,
+                                                        forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+            cellGotDequeued = true
+            return super.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+        }
+    }
+    
+    class MockItemCell: ItemCell {
+        var configCellGotCalled = false
+        
+        override func configCellWithItem(item: ToDoItem) {
+            configCellGotCalled = true
+        }
     }
 }
