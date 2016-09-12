@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum  Section: Int {
+    case ToDo
+    case Done
+}
+
 class ItemListDataProvider: NSObject, UITableViewDataSource, UITableViewDelegate {
     var itemManager: ItemManager?
     
@@ -16,16 +21,21 @@ class ItemListDataProvider: NSObject, UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let numberOfRows: Int
-        switch section {
-        case 0:
-            numberOfRows = itemManager?.todoCount ?? 0
-        case 1:
-            numberOfRows = itemManager?.doneCount ?? 0
-        default:
-            numberOfRows = 0
+        guard let itemManager = itemManager else {return 0}
+        guard let itemSection = Section(rawValue: section) else {
+            fatalError()
         }
-        return numberOfRows
+        
+        let numOfRows: Int
+        
+        switch itemSection {
+        case .ToDo:
+            numOfRows = itemManager.todoCount
+        case .Done:
+            numOfRows = itemManager.doneCount
+        }
+        return numOfRows
+        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
