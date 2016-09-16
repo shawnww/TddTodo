@@ -96,27 +96,57 @@ class ItemListDataProviderTests: XCTestCase {
         
         let cell = mockTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0)) as! MockItemCell
         
-        XCTAssertTrue(cell.configCellGotCalled)
+        XCTAssertEqual(toDoItem, cell.todoItem)
+    }
+    
+    func testCellInSectionTwo_GetsConfiguredWithDoneItem() {
+ 
+        let mockTableView = MockTableView(
+            frame: CGRect(x: 0, y: 0, width: 320, height: 480),
+            style: .Plain)
+        
+        mockTableView.dataSource = sut
+        mockTableView.registerClass(MockItemCell.self, forCellReuseIdentifier: "ItemCell")
+        
+        let firstItem = ToDoItem(title: "First",
+                                 itemDescription: "First description")
+        sut.itemManager?.addItem(firstItem)
+        
+        
+        let secondItem = ToDoItem(title: "Second",
+                                  itemDescription: "Second description")
+        sut.itemManager?.addItem(secondItem)
+
+        sut.itemManager?.checkItemAtIndex(1)
+        mockTableView.reloadData()
+        
+        
+        let cell = mockTableView.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 1)) as! MockItemCell
+        
+        XCTAssertEqual(cell.todoItem, secondItem)
+
     }
 }
 
 
 extension ItemListDataProviderTests {
-    class MockTableView : UITableView {
-        var cellGotDequeued = false
+    class MockTableView: UITableView{
+            var cellGotDequeued = false
         
-        override func dequeueReusableCellWithIdentifier(identifier: String,
-                                                        forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        override func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
             cellGotDequeued = true
             return super.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
         }
     }
     
+    
     class MockItemCell: ItemCell {
-        var configCellGotCalled = false
+        
+        var todoItem : ToDoItem?
         
         override func configCellWithItem(item: ToDoItem) {
-            configCellGotCalled = true
+
+            todoItem = item
         }
     }
 }
