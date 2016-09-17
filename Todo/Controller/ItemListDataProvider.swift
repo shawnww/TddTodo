@@ -42,10 +42,7 @@ class ItemListDataProvider: NSObject, UITableViewDataSource, UITableViewDelegate
         let cell = tableView.dequeueReusableCellWithIdentifier("ItemCell", forIndexPath: indexPath) as! ItemCell
         
         guard let itemManager = itemManager else { fatalError() }
-        guard let section = Section(rawValue: indexPath.section) else
-        {
-            fatalError()
-        }
+        guard let section = Section(rawValue: indexPath.section) else{fatalError()}
 
         let item: ToDoItem
         switch section {
@@ -59,6 +56,22 @@ class ItemListDataProvider: NSObject, UITableViewDataSource, UITableViewDelegate
         return cell
     }
     
+    func tableView(tableView: UITableView,
+                   titleForDeleteConfirmationButtonForRowAtIndexPath indexPath:
+        NSIndexPath) -> String? {
+        guard let section = Section(rawValue: indexPath.section) else
+        {
+            fatalError()
+        }
+        let buttonTitle: String
+        switch section {
+        case .ToDo:
+            buttonTitle = "Check"
+        case .Done:
+            buttonTitle = "Uncheck"
+        }
+        return buttonTitle
+    }
     
 }
 
