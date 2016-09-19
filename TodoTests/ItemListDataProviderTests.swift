@@ -191,8 +191,7 @@ extension ItemListDataProviderTests {
         
         var todoItem : ToDoItem?
         
-        override func configCellWithItem(item: ToDoItem) {
-
+        override func configCellWithItem(item: ToDoItem, checked: Bool) {
             todoItem = item
         }
     }
