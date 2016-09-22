@@ -20,15 +20,15 @@ class ItemCellTests: XCTestCase {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier(
-            "ItemListViewController") as! ItemListViewController
+        let controller = storyboard.instantiateViewController(
+            withIdentifier: "ItemListViewController") as! ItemListViewController
         
         _ = controller.view
         
         self.tableView = controller.tableView
         self.dataProvider = FakeDataSource()
         tableView.dataSource = self.dataProvider
-        cell = tableView.dequeueReusableCellWithIdentifier("ItemCell",forIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! ItemCell
+        cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell",for: IndexPath(row: 0, section: 0)) as! ItemCell
     }
     
     override func tearDown() {
@@ -71,9 +71,9 @@ class ItemCellTests: XCTestCase {
     
     func testTitle_ForCheckedTasks_IsStrokeThrough() {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier(
-            "ItemCell",
-            forIndexPath: NSIndexPath(forRow: 0, inSection: 0)) as! ItemCell
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "ItemCell",
+            for: IndexPath(row: 0, section: 0)) as! ItemCell
         
         let toDoItem = ToDoItem(title: "First",
                                 itemDescription: nil,
@@ -83,7 +83,7 @@ class ItemCellTests: XCTestCase {
         cell.configCellWithItem(toDoItem, checked: true)
         
         let attributedString = NSAttributedString(string: "First",
-                                                  attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue])
+                                                  attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
         
         XCTAssertEqual(cell.titleLabel.attributedText, attributedString)
         XCTAssertNil(cell.locationLabel.text)
@@ -96,12 +96,12 @@ extension ItemCellTests {
     class FakeDataSource: NSObject, UITableViewDataSource {
         
         
-        func  tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        func  tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
             return 1
         }
         
         
-        func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             return UITableViewCell()
         }
     }

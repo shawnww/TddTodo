@@ -14,8 +14,8 @@ class ItemCell: UITableViewCell {
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
-    lazy var dataFormatter: NSDateFormatter = {
-        let dateFormatter = NSDateFormatter()
+    lazy var dataFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         return dateFormatter
     }()
@@ -25,18 +25,18 @@ class ItemCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configCellWithItem(item: ToDoItem,
+    func configCellWithItem(_ item: ToDoItem,
                             checked: Bool = false) {
         
         if checked {
             let attributedTitle = NSAttributedString(string: item.title,
-                                                     attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.StyleSingle.rawValue])
+                                                     attributes: [NSStrikethroughStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue])
             
             titleLabel.attributedText = attributedTitle
             locationLabel.text = nil
@@ -46,9 +46,9 @@ class ItemCell: UITableViewCell {
             locationLabel.text = item.location?.name
             
             if let timestamp = item.timeStamp {
-                let date = NSDate(timeIntervalSince1970: timestamp)
+                let date = Date(timeIntervalSince1970: timestamp)
                 
-                dateLabel.text = dataFormatter.stringFromDate(date)
+                dateLabel.text = dataFormatter.string(from: date)
             }
         }
     }

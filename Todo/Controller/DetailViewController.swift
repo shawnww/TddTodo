@@ -17,8 +17,8 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     
     @IBOutlet weak var mapView: MKMapView!
-    let dateFormatter: NSDateFormatter = {
-        let dateFormatter = NSDateFormatter()
+    let dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
         return dateFormatter
     }()
@@ -31,7 +31,7 @@ class DetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         guard let itemInfo = itemInfo else { return }
@@ -42,8 +42,8 @@ class DetailViewController: UIViewController {
         descriptionLabel.text = item.itemDescription
         
         if let timestamp = item.timeStamp {
-            let date = NSDate(timeIntervalSince1970: timestamp)
-            dateLabel.text = dateFormatter.stringFromDate(date)
+            let date = Date(timeIntervalSince1970: timestamp)
+            dateLabel.text = dateFormatter.string(from: date)
         }
         
         if let coordinate = item.location?.coordinate {
